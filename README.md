@@ -1,5 +1,10 @@
 # Intruder Alert
 
+<div align="center">
+    <img src="docs/images/logo.png" alt="Logo" width="300" height="300">
+</div>
+
+
 Intruder Alert is a face detection system that utilizes OpenCV's classifiers to identify and record faces in real-time video. This system captures images of detected faces, logging the time of detection, which can be used for security monitoring and intruder detection purposes.
 
 ## Features
