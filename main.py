@@ -1,3 +1,4 @@
+import argparse
 from datetime import datetime
 import cv2
 
@@ -6,7 +7,7 @@ from src.roi_detection import detect_rois, draw_on_image
 IMAGE_PATH = "detections/"
 
 
-def detect_and_save_faces():
+def detect_and_save_faces(headless: bool = False):
 
     video_capture = cv2.VideoCapture(0)
     classifier = cv2.CascadeClassifier(
@@ -40,9 +41,12 @@ def detect_and_save_faces():
                     cv2.imwrite(f"{IMAGE_PATH}face_detected_{timestamp.strftime("%Y-%m-%d %H:%M:%S")}.png", video_frame)
                     last_timestamp = timestamp
             
+        # If the application is running in headless mode, skip displaying the frame
+        if headless:
+            continue
 
-        # display the processed frame in a window named "My Face Detection Project"
-        cv2.imshow("My Face Detection Project", video_frame)
+        # display the processed frame in a window
+        cv2.imshow("Intruder Alert", video_frame)
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
@@ -53,4 +57,8 @@ def detect_and_save_faces():
 
 
 if __name__ == "__main__":
-    detect_and_save_faces()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--headless", action="store_true", help="Run the application in headless mode.")
+    args = parser.parse_args()
+    detect_and_save_faces(args.headless)
+    
