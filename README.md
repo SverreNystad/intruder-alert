@@ -15,7 +15,8 @@ Intruder Alert is a face detection system that utilizes OpenCV's classifiers to 
 - Depth estimation using Depth Estimation model.
 
 <div align="center">
-    <img src="docs/images/predicted_depth.png" alt="depth" width="600">
+    <img src="docs/images/roi_detected.png" alt="roi" width="400">
+    <img src="docs/images/predicted_depth.png" alt="depth" width="400">
 </div>
 
 ## Prerequisites
