@@ -1,6 +1,8 @@
 import argparse
+from cv2 import CascadeClassifier
+from cv2.data import haarcascades
 
-from src.roi_detection import detect_and_save_faces
+from src.roi_detection import detect_and_save_rois
 
 
 if __name__ == "__main__":
@@ -12,4 +14,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Run the face detection pipeline
-    detect_and_save_faces(args.headless)
+    classifier = CascadeClassifier(haarcascades + "haarcascade_frontalface_default.xml")
+    detect_and_save_rois(classifier, args.headless)

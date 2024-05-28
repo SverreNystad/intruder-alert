@@ -6,14 +6,11 @@ from datetime import datetime
 IMAGE_PATH = "detections/"
 
 
-def detect_and_save_faces(headless: bool = False):
+def detect_and_save_rois(classifier: CascadeClassifier, headless: bool = False):
     """
-    Detect faces in a video stream from the webcam and save the frames containing the faces.
+    Detect Regions of Interest (ROI) in a video stream from the webcam and save the frames containing the faces.
     """
     video_capture = cv2.VideoCapture(0)
-    classifier = cv2.CascadeClassifier(
-        cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-    )
 
     last_timestamp = None
 
@@ -26,11 +23,11 @@ def detect_and_save_faces(headless: bool = False):
             break
 
         # detect regions of interest in the frame
-        rois = detect_rois(video_frame, classifier)
+        rois = _detect_rois(video_frame, classifier)
         if len(rois) > 0:
             timestamp = datetime.now()
             print(f"Regions of interest detected: {rois} at {timestamp.strftime("%Y-%m-%d %H:%M:%S")}.")
-            draw_crosshair_over_rois_on_image(video_frame, rois)
+            _draw_crosshair_over_rois_on_image(video_frame, rois)
 
             # Save the frame as an image
             if last_timestamp is None:
@@ -39,7 +36,7 @@ def detect_and_save_faces(headless: bool = False):
             else:
                 time_diff = timestamp - last_timestamp
                 if time_diff.microseconds >= 1:
-                    cv2.imwrite(f"{IMAGE_PATH}face_detected_{timestamp.strftime("%Y-%m-%d %H:%M:%S")}.png", video_frame)
+                    cv2.imwrite(f"{IMAGE_PATH}roi_detected_{timestamp.strftime("%Y-%m-%d %H:%M:%S")}.png", video_frame)
                     last_timestamp = timestamp
             
         # If the application is running in headless mode, skip displaying the frame
@@ -68,8 +65,6 @@ def detect_rois_in_video(
 
     if not video.isOpened():
         raise ValueError("Error opening video stream or file")
-        
-        
 
     frames_containing_rois = []
 
@@ -81,13 +76,11 @@ def detect_rois_in_video(
             # Video has ended
             break
 
-        regions_of_interest = detect_rois(frame, classifier)
-        draw_crosshair_over_rois_on_image(frame, regions_of_interest)
+        regions_of_interest = _detect_rois(frame, classifier)
+        _draw_crosshair_over_rois_on_image(frame, regions_of_interest)
         if len(regions_of_interest) > 0:
             frames_containing_rois.append(frame)
             cv2.imwrite(f"{IMAGE_PATH}frame_{frame_count}.png", frame)
-        
-        
 
     video.release()
     cv2.destroyAllWindows()
@@ -95,7 +88,7 @@ def detect_rois_in_video(
     return frames_containing_rois
 
 
-def detect_rois(image: MatLike, classifier: CascadeClassifier) -> list[cv2.typing.Rect]:
+def _detect_rois(image: MatLike, classifier: CascadeClassifier) -> list[cv2.typing.Rect]:
     """
     Detect regions of interest (ROIs) in an image using the specified classifier.
     """
@@ -106,7 +99,7 @@ def detect_rois(image: MatLike, classifier: CascadeClassifier) -> list[cv2.typin
     return regions_of_interest
 
 
-def draw_crosshair_over_rois_on_image(image: MatLike, regions_of_interest: list[Rect]) -> None:
+def _draw_crosshair_over_rois_on_image(image: MatLike, regions_of_interest: list[Rect]) -> None:
     """
     Draw crosshairs on the center of regions of interest on the image.
     """
@@ -134,7 +127,7 @@ def draw_crosshair_over_rois_on_image(image: MatLike, regions_of_interest: list[
         )
         image = cv2.circle(image, center, CROSSHAIR_SIZE, COLOR, THICKNESS)
 
-def draw_bounding_boxes_over_rois_on_image(image: MatLike, regions_of_interest: list[Rect]) -> None:
+def _draw_bounding_boxes_over_rois_on_image(image: MatLike, regions_of_interest: list[Rect]) -> None:
     """
     Draw bounding boxes around regions of interest on the image.
     """
