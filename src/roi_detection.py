@@ -67,8 +67,9 @@ def detect_rois_in_video(
     video = cv2.VideoCapture(video_path)
 
     if not video.isOpened():
-        print("Error opening video stream or file")
-        return
+        raise ValueError("Error opening video stream or file")
+        
+        
 
     frames_containing_rois = []
 
@@ -82,11 +83,11 @@ def detect_rois_in_video(
 
         regions_of_interest = detect_rois(frame, classifier)
         draw_crosshair_over_rois_on_image(frame, regions_of_interest)
-        frames_containing_rois.append(frame)
-
-        cv2.imwrite(f"{IMAGE_PATH}frame_{frame_count}.png", frame)
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
+        if len(regions_of_interest) > 0:
+            frames_containing_rois.append(frame)
+            cv2.imwrite(f"{IMAGE_PATH}frame_{frame_count}.png", frame)
+        
+        
 
     video.release()
     cv2.destroyAllWindows()
