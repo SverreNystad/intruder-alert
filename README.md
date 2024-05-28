@@ -14,7 +14,7 @@ Intruder Alert is a face detection system that utilizes OpenCV's classifiers to 
 - Saving detections as images for further analysis or evidence.
 
 ## Prerequisites
-Ensure Python 3.9 or newer is installed on your machine. [Download Python](https://www.python.org/downloads/)
+Ensure Python 3.11 or newer is installed on your machine. [Download Python](https://www.python.org/downloads/)
 
 Then, install the required packages by running the following command in the project directory:
 ```bash
