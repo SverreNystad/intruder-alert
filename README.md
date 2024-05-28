@@ -12,6 +12,11 @@ Intruder Alert is a face detection system that utilizes OpenCV's classifiers to 
 - Timestamped logging of detected faces.
 - Headless mode for running on servers without a display (or on the laptop during lunch meetings or so).
 - Saving detections as images for further analysis or evidence.
+- Depth estimation using Depth Estimation model.
+
+<div align="center">
+    <img src="docs/images/predicted_depth.png" alt="depth" width="600">
+</div>
 
 ## Prerequisites
 Ensure Python 3.11 or newer is installed on your machine. [Download Python](https://www.python.org/downloads/)
