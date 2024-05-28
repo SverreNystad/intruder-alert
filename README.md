@@ -4,8 +4,10 @@
     <img src="docs/images/logo.png" alt="Logo" width="300" height="300">
 </div>
 
+Have you ever wanted to know who's been snooping around your computer while you're away?
+Several times, I've left my laptop unattended, only to return and find someone have been poking around (changing wallpapers, open inappropriate tabs, add button shortcuts, even fake blue screens of death) and you do not fancy just locking your computer. Then you need Intruder Alert!
 
-Intruder Alert is a face detection system that utilizes OpenCV's classifiers to identify and record faces in real-time video. This system captures images of detected faces, logging the time of detection, which can be used for security monitoring and intruder detection purposes.
+**Intruder Alert** is a face detection system that utilizes OpenCV's classifiers to identify and record faces in real-time video. This system captures images of detected faces, logging the time of detection, which can be used for security monitoring and intruder detection purposes.
 
 ## Features
 - Real-time face detection from webcam feed.
@@ -39,7 +41,7 @@ The system will activate the webcam and begin scanning for faces. Detected faces
 Press `q` while focused on the video window to quit the application.
 
 
-### Headless Mode
+### Headless Mode (aka Ninja Mode)
 To run the system in headless mode, use the `--headless` flag:
 ```bash
 python main.py --headless
